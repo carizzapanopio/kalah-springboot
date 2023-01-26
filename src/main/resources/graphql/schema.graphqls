@@ -1,0 +1,52 @@
+type Game {
+	id: ID!,
+	status: String
+}
+
+type Player {
+	id: ID!,
+	name: String
+}
+
+type GameInfo {
+	id: ID!,
+	game: Game,
+	playerOne: Player,
+	playerTwo: Player,
+	winner: Player
+}
+
+type House {
+	id: ID!,
+	value: Int
+}
+
+type Turn {
+	id: ID!,
+	game: Game,
+	houseValues: [House],
+	zoneValue: Int,
+	player: Player
+}
+
+type TurnSet {
+	playerOne: Turn,
+	playerTwo: Turn,
+}
+
+type Query {
+	getCurrentGame(playerId: Int): GameInfo
+	getTurn(playerId: Int, gameId: Int): Turn
+	getWhosPlaying(gameId: Int): Player
+	getGameById(gameId: Int): Game
+	getGames: [Game]
+}
+
+type Mutation {
+	addNewPlayer:Player
+	play(playerId: Int, gameId: Int, houseId: Int):TurnSet
+}
+
+type Subscription {
+    getPlayerOngoingGame: Game
+}
